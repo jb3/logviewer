@@ -1,0 +1,27 @@
+name: Docker
+
+on:
+  push:
+    branches:
+      - master
+env:
+  IMAGE_NAME: swot
+
+jobs:
+  push_docker_image:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build . --file Dockerfile -t j03b/logviewer/logviewer:${{ github.sha }}
+
+      - name: Publish Docker
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: j03b/swot-backend/swot:${{ github.sha }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
