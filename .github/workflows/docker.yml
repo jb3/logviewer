@@ -19,7 +19,7 @@ jobs:
         run: docker build . --file Dockerfile -t j03b/logviewer/logviewer:${{ github.sha }}
 
       - name: Publish Docker
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: j03b/logviewer/logviewer:${{ github.sha }}
           username: ${{ github.actor }}
